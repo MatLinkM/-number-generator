@@ -22,8 +22,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     before: (app) => {
-      app.get('/numbers', async (req, res) => {
-        const listNumbers = NumberGeneration.numbersGenaration();
+      app.get('/numbers', (req, res) => {
+        const listNumbers = NumberGeneration.listNumbers({ perPage: 100, page: 1, totalPages: 100 });
         res.json( listNumbers );
       });
     }

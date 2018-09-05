@@ -1,27 +1,21 @@
-module.exports.numbersGenaration = () => {
+module.exports.listNumbers = (values) => {
   let list = [];
+  let meta = {
+    "page": values.page,
+    "perPage": values.perPage,
+    "totalPages": values.totalPages
+  };
+  let data = [];
 
-  for (let i = 0; i < 1000; i++) {
-    i = i.toString();
-    if (i.length == 1) {
-      list.push({
-        "number": `555 000 00${i}`,
-        "cost": `1.0${i}`
-      });
-    }
-    else if (i.length == 2) {
-      list.push({
-        "number": `555 000 0${i}`,
-        "cost": `1.${i}`
-      });
-    }
-    else if (i.length == 3) {
-      list.push({
-        "number": `555 000 ${i}`,
-        "cost": `1.${i.substr(1)}`
-      });
-    }
+  for (let number = 555000000; number < 555001000; number++) {
+    number = number.toString();
+    data.push({
+      "number": number,
+      "cost": `1.${number.substr(7)}`
+    });
   }
+
+  list = list.concat(meta, data);
 
   return list;
 };
