@@ -1,4 +1,5 @@
 const path = require('path');
+const NumberGeneration = require('./mock');
 
 module.exports = {
   entry: path.join(__dirname, 'src', 'index.js'),
@@ -20,31 +21,10 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'public'),
-    before: function(app) {
-      app.get('/numbers', function(req, res) {
-        res.json(
-          {
-            "meta": {
-              "page": 1,
-              "perPage": 3,
-              "totalPages": 334
-            },
-            "data": [
-              {
-                "number": 555000000,
-                "cost": 1
-              },
-              {
-                "number": 555000001,
-                "cost": 1.01
-              },
-              {
-                "number": 555000002,
-                "cost": 1.02
-              }
-            ]
-          }
-        );
+    before: (app) => {
+      app.get('/numbers', async (req, res) => {
+        const listNumbers = NumberGeneration.numbersGenaration();
+        res.json( listNumbers );
       });
     }
   }
