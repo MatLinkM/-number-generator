@@ -23,8 +23,10 @@ module.exports = {
     contentBase: path.join(__dirname, 'public'),
     before: (app) => {
       app.get('/numbers', async (req, res) => {
-        const page = await PageGeneration.createPage({ perPage: 3, page: 1 });
-        res.json( page );
+        let page = Number(req.query.page);
+        let perPage = Number(req.query.perPage);
+        const response = await PageGeneration.createPage({ perPage, page });
+        res.json( response );
       });
     }
   }
