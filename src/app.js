@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import api from './services';
+import Api from './services';
 
 export default class App extends Component {
 
@@ -20,12 +20,23 @@ export default class App extends Component {
 
   getNumbers = async () => {
     const { perPage, page } = this.state;
-    const numbers = await api.get(`/numbers?page=${page}&perPage=${perPage}`);
+    const numbers = await Api.get(`/numbers?page=${page}&perPage=${perPage}`);
 
     this.setState({
       numbers: numbers.data.data,
       totalPages: numbers.data.meta.totalPages
     });
+  }
+
+  selectPerPage = (e) => {
+    this.setState({ perPage: e.target.value });
+  }
+
+  setPerPage = () => {
+    const { perPage } = this.state
+    if (perPage >= 0 && perPage <= 1000) {
+      this.getNumbers();
+    }
   }
 
   prevPage = async () => {
@@ -49,8 +60,11 @@ export default class App extends Component {
   }
 
   render() {
+    const { perPage } = this.state;
     return (
       <div>
+        <input type="text" name="perPage" value={perPage} onChange={this.selectPerPage} />
+        <button onClick={this.setPerPage}>Submit</button>
         { this.state.numbers
           ?
           this.state.numbers.map((item, i) => {
