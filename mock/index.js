@@ -1,5 +1,5 @@
 module.exports = {
-  listNumbers() {
+  async listNumbers() {
     let data = [];
 
     for (let number = 555000000; number < 555001000; number++) {
@@ -13,8 +13,8 @@ module.exports = {
     return data;
   },
 
-  createPage(value) {
-    const listNumbers = this.listNumbers();
+  async createPage(value) {
+    const listNumbers = await this.listNumbers();
     let totalPages = Math.ceil(listNumbers.length / value.perPage);
     let count = (value.page * value.perPage) - value.perPage;
     let maxPage = count + value.perPage;

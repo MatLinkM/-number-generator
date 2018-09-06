@@ -22,8 +22,8 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     before: (app) => {
-      app.get('/numbers', (req, res) => {
-        const page = PageGeneration.createPage({ perPage: 3, page: 1 });
+      app.get('/numbers', async (req, res) => {
+        const page = await PageGeneration.createPage({ perPage: 3, page: 1 });
         res.json( page );
       });
     }
