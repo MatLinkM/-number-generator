@@ -1,4 +1,4 @@
-const INITIAL_STATE = 100;
+const INITIAL_STATE = '1';
 
 export default function page(state = INITIAL_STATE, action) {
   switch (action.type) {

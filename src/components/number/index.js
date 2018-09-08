@@ -1,12 +1,14 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 const Number = ({page, number, nextPage}) => (
   <Fragment>
-      <li>{ number }</li>
-      <li>{ page }</li>
-      <li>{ nextPage }</li>
+    { number.map((item, i) => (
+        <li key={i}>{ item.number } = { item.cost }$</li>
+      ))
+    }
+    <li>{ page }</li>
+    <li>{ nextPage }</li>
   </Fragment>
 );
 
@@ -15,6 +17,4 @@ const mapStateToProps = state => ({
   page: state.page
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(Number, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Number);
+export default connect(mapStateToProps)(Number);

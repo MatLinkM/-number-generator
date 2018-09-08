@@ -3,7 +3,7 @@ export const requestNumbers = dataPage => ({
     payload: { dataPage }
 });
 
-export const numbersSuccess = data => ({
+export const successNumber = data => ({
     type: 'NUMBERS_SUCCESS',
     payload: { data }
 });

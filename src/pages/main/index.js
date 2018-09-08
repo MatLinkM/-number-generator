@@ -8,10 +8,16 @@ import Number from '../../components/number';
 
 class Main extends Component {
 
-  componentDidMount() {
-    const teste = this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
+  async componentDidMount() {
+    await this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
+    console.log(this.props.number);
+  }
 
-    console.log(teste)
+  nextPage = async (value) => {
+    console.log(this.props.number);
+    this.props.nextPage(value);
+
+    await this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
   }
 
   render() {
@@ -24,7 +30,7 @@ class Main extends Component {
         </ul>
         <li>{ this.props.page }, { this.props.perPage } </li>
         <button onClick={() => this.props.prevPage(1)}>Prev</button>
-        <button onClick={() => this.props.nextPage(1)}>Next</button>
+        <button onClick={() => this.nextPage(1)}>Next</button>
         <button onClick={() => this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage })}>Sub</button>
       </div>
     );

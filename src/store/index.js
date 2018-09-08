@@ -10,6 +10,11 @@ const sagaMiddleware = createSagaMiddleware();
 
 middleware.push(sagaMiddleware);
 
-const store = createStore(reducers, compose(applyMiddleware(...middleware)));
+const createAppropriateStore =
+  process.env.NODE_ENV === 'development' ? console.tron.createStore : createStore;
+
+  const store = createAppropriateStore(reducers, compose(applyMiddleware(...middleware)));
+
+sagaMiddleware.run(sagas);
 
 export default store

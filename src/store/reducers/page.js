@@ -3,14 +3,18 @@ const INITIAL_STATE = 1;
 export default function page(state = INITIAL_STATE, action) {
   switch (action.type) {
     case 'NEXT_PAGE':
-      return state + action.payload.page;
+      state = Number(state) + action.payload.page;
+
+      return state.toString();
     case 'PREV_PAGE':
       if (state > 1) {
-        return state - action.payload.page;
+        state = Number(state) - action.payload.page;
+
+        return state.toString();
       } else {
-        return state;
+        return state.toString();
       }
     default:
-      return state;
+      return state.toString();
   }
 }
