@@ -7,16 +7,17 @@ import * as Numbers from '../../store/actions/numbers';
 import Number from '../../components/number';
 
 class Main extends Component {
-
-  async componentDidMount() {
-    await this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
-    console.log(this.props.number);
+  componentDidMount() {
+    this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
   }
 
   nextPage = async (value) => {
-    console.log(this.props.number);
-    this.props.nextPage(value);
+    await this.props.nextPage(value);
+    await this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
+  }
 
+  prevPage = async (value) => {
+    await this.props.prevPage(value);
     await this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
   }
 
@@ -29,7 +30,7 @@ class Main extends Component {
           <Number />
         </ul>
         <li>{ this.props.page }, { this.props.perPage } </li>
-        <button onClick={() => this.props.prevPage(1)}>Prev</button>
+        <button onClick={() => this.prevPage(1)}>Prev</button>
         <button onClick={() => this.nextPage(1)}>Next</button>
         <button onClick={() => this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage })}>Sub</button>
       </div>

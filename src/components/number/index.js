@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 
 const Number = ({page, number, nextPage}) => (
   <Fragment>
-    { number.map((item, i) => (
-        <li key={i}>{ item.number } = { item.cost }$</li>
-      ))
+    {
+      number ?
+        number.map((item, i) => (
+          <li key={i}>{ item.number } = { item.cost }$</li>
+        ))
+      : null
     }
     <li>{ page }</li>
-    <li>{ nextPage }</li>
   </Fragment>
 );
 
