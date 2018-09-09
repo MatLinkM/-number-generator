@@ -4,12 +4,17 @@ import api from '../../services';
 import { Creators as NumbersListActions } from '../ducks/numbersList';
 
 export function* getNumbersList(action) {
-  const { data } = yield call(
-    api.get,
-    `/numbers?page=${action.payload.dataPage.page}&perPage=${action.payload.dataPage.perPage}`
-  );
+  try {
+    const { data } = yield call(
+      api.get,
+      `/numbers?page=${action.payload.dataPage.page}&perPage=${action.payload.dataPage.perPage}`
+    );
 
-  const numbersList = data;
+    const numbersList = data;
 
-  yield put(NumbersListActions.successNumbersList(numbersList));
+    yield put(NumbersListActions.successNumbersList(numbersList));
+  } catch (error) {
+    yield put(NumbersListActions.failureNumbersList('Estamos com problemas, tente mais tarde!'));
+  }
+
 }

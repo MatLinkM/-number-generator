@@ -24,18 +24,16 @@ class Main extends Component {
   }
 
   setPerPage = async (e) => {
-    await this.props.perPage(e.target.value)
+    await this.props.perPage(e.target.value);
   }
 
   newPerPage = async () => {
-    console.log(this.props.numbersList.meta.page);
     const resetPage = this.props.numbersList.meta.page - 1;
     await this.props.prevPage(resetPage);
     await this.getDataPage();
   }
 
   nextPage = async () => {
-    console.log(this.props.numbersList.meta.totalPages, this.props.numbersList.meta.page)
     if (this.props.numbersList.meta.page < this.props.numbersList.meta.totalPages) {
       await this.props.nextPage(1);
       await this.props.requestNumbersList({

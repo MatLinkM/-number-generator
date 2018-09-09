@@ -1,6 +1,7 @@
 export const Types = {
   REQUEST: 'numbersList/REQUEST',
   SUCCESS: 'numbersList/SUCCESS',
+  FAILURE: 'numbersList/FAILURE',
   PER_PAGE: 'numbersList/PER_PAGE',
   NEXT_PAGE: 'numbersList/NEXT_PAGE',
   PREV_PAGE: 'numbersList/PREV_PAGE',
@@ -15,27 +16,36 @@ const INITIAL_STATE = {
     perPage: '100',
     totalPages: '10'
   },
-  data: []
+  data: [],
+  loading: false,
+  error: null
 };
 
 export default function numbersList(state = INITIAL_STATE, action) {
   switch (action.type) {
     case Types.REQUEST:
       return { ...state, loading: true };
+
     case Types.SUCCESS:
       return { meta: action.payload.data.meta, data: action.payload.data.data, loading: false };
+
+    case Types.FAILURE:
+      return { ...state, loading: false, error: action.payload.error };
+
     case Types.PER_PAGE:
-      state.meta.perPage = action.payload.quantity;
-      state.meta.perPage = state.meta.perPage.toString();
+      state.meta.perPage = action.payload.quantity.toString();
       return { meta: state.meta, data: state.data };
+
     case Types.NEXT_PAGE:
       state.meta.page = Number(state.meta.page) + action.payload.page;
       state.meta.page = state.meta.page.toString();
       return { meta: state.meta, data: state.data };
+
     case Types.PREV_PAGE:
       state.meta.page = Number(state.meta.page) - action.payload.page
       state.meta.page = state.meta.page.toString();
       return { meta: state.meta, data: state.data };
+
     default:
       return state;
   }
@@ -53,6 +63,11 @@ export const Creators = {
   successNumbersList: data => ({
     type: Types.SUCCESS,
     payload: { data }
+  }),
+
+  failureNumbersList: error => ({
+    type: Types.FAILURE,
+    payload: { error }
   }),
 
   perPage: quantity => ({
