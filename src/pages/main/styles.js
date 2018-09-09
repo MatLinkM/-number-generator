@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 100px;
+  padding: 100px 0px;
+  max-width: 700px;
+  margin: 0 auto;
 `;
 
 export const Content = styled.div`
@@ -40,7 +42,7 @@ export const Submit = styled.div`
   input {
     width: 100px;
     height: 25px;
-    margin: 0 10px;
+    margin: 0 15px;
     font-size: 14px;
     text-align: center;
     border-radius: 5px;
@@ -48,6 +50,7 @@ export const Submit = styled.div`
   }
 
   button {
+    width: 55px;
     color: #EDEDED;
     font-size: 12px;
     background-color: rgba(0,0,0,0);

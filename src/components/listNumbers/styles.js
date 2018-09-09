@@ -5,9 +5,13 @@ export const Container = styled.div`
   height: auto;
   background-color: #232324;
 
-  li {
+  table {
+    width: 100%;
+  }
+
+  tr {
     display: flex;
     justify-content: space-between;
-    background-color: #EDEDED;
+    padding: 0 40px;
   }
 `;
