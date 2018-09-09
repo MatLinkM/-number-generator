@@ -12,8 +12,8 @@ export const Types = {
 const INITIAL_STATE = {
   meta: {
     page: '1',
-    perPage: '10',
-    totalPages: '100'
+    perPage: '100',
+    totalPages: '10'
   },
   data: []
 };

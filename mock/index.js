@@ -29,7 +29,7 @@ module.exports = {
 
     if(value.page <= totalPages){
       for(let i = count; i < maxPage; i++){
-        if(listNumbers.length != 0){
+        if(listNumbers[i] != null){
           page.data.push(listNumbers[i]);
         }
         count++;
