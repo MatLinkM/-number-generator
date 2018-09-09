@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as ActionsNumbersList from '../../store/actions/numbersList';
+import { Creators as ActionsNumbersList } from '../../store/ducks/numbersList';
 
 import NumbersList from '../../components/listNumbers';
 
@@ -27,7 +27,15 @@ class Main extends Component {
     await this.props.perPage(e.target.value)
   }
 
+  newPerPage = async () => {
+    console.log(this.props.numbersList.meta.page);
+    const resetPage = this.props.numbersList.meta.page - 1;
+    await this.props.prevPage(resetPage);
+    await this.getDataPage();
+  }
+
   nextPage = async () => {
+    console.log(this.props.numbersList.meta.totalPages, this.props.numbersList.meta.page)
     if (this.props.numbersList.meta.page < this.props.numbersList.meta.totalPages) {
       await this.props.nextPage(1);
       await this.props.requestNumbersList({
@@ -51,7 +59,7 @@ class Main extends Component {
     return (
       <div>
         <input type="text" name="perPage" value={this.props.numbersList.meta.perPage} onChange={this.setPerPage} />
-        <button onClick={() => this.getDataPage()}>Submit</button>
+        <button onClick={() => this.newPerPage()}>Submit</button>
         <ul>
           <NumbersList />
         </ul>
