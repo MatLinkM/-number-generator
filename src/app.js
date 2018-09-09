@@ -7,6 +7,8 @@ import Router from './router';
 import './config/reactotron';
 import store from './store';
 
+import './styles/global';
+
 const App = () => (
   <BrowserRouter>
     <Provider store={store}>

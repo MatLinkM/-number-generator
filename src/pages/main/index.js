@@ -5,6 +5,14 @@ import { Creators as ActionsNumbersList } from '../../store/ducks/numbersList';
 
 import NumbersList from '../../components/listNumbers';
 
+import {
+  Container,
+  Header,
+  Title,
+  Submit,
+  Content
+} from './styles';
+
 class Main extends Component {
   async componentDidMount() {
     await this.getDataPage();
@@ -55,15 +63,20 @@ class Main extends Component {
 
   render() {
     return (
-      <div>
-        <input type="text" name="perPage" value={this.props.numbersList.meta.perPage} onChange={this.setPerPage} />
-        <button onClick={() => this.newPerPage()}>Submit</button>
-        <ul>
+      <Container>
+        <Content>
+          <Header>
+            <Title>Available phone numbers</Title>
+            <Submit>
+              <input type="text" name="perPage" value={this.props.numbersList.meta.perPage} onChange={this.setPerPage} />
+              <button onClick={() => this.newPerPage()}>Submit</button>
+            </Submit>
+          </Header>
           <NumbersList />
-        </ul>
-        <button onClick={() => this.prevPage()}>Prev</button>
-        <button onClick={() => this.nextPage()}>Next</button>
-      </div>
+          <button onClick={() => this.prevPage()}>Prev</button>
+          <button onClick={() => this.nextPage()}>Next</button>
+        </Content>
+      </Container>
     );
   }
 }
