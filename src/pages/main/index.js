@@ -1,49 +1,71 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as SelectPage from '../../store/actions/selectPage';
-import * as Numbers from '../../store/actions/numbers';
+import * as ActionsNumbersList from '../../store/actions/numbersList';
 
-import Number from '../../components/number';
+import NumbersList from '../../components/listNumbers';
 
 class Main extends Component {
-  componentDidMount() {
-    this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
+  async componentDidMount() {
+    await this.getDataPage();
   }
 
-  nextPage = async (value) => {
-    await this.props.nextPage(value);
-    await this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
+  getDataPage = async (e) => {
+    if ((
+      this.props.numbersList.meta.perPage > 0
+      && this.props.numbersList.meta.perPage <= 1000)
+      && this.props.numbersList.meta.perPage
+      ) {
+      await this.props.requestNumbersList({
+        page: this.props.numbersList.meta.page,
+        perPage: this.props.numbersList.meta.perPage
+      });
+    }
   }
 
-  prevPage = async (value) => {
-    await this.props.prevPage(value);
-    await this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage });
+  setPerPage = async (e) => {
+    await this.props.perPage(e.target.value)
+  }
+
+  nextPage = async () => {
+    if (this.props.numbersList.meta.page < this.props.numbersList.meta.totalPages) {
+      await this.props.nextPage(1);
+      await this.props.requestNumbersList({
+        page: this.props.numbersList.meta.page,
+        perPage: this.props.numbersList.meta.perPage
+      });
+    }
+  }
+
+  prevPage = async () => {
+    if (this.props.numbersList.meta.page > 1) {
+      await this.props.prevPage(1);
+      await this.props.requestNumbersList({
+        page: this.props.numbersList.meta.page,
+        perPage: this.props.numbersList.meta.perPage
+      });
+    }
   }
 
   render() {
     return (
       <div>
-        <input type="text" name="perPage"/>
-        <button>Submit</button>
+        <input type="text" name="perPage" value={this.props.numbersList.meta.perPage} onChange={this.setPerPage} />
+        <button onClick={() => this.getDataPage()}>Submit</button>
         <ul>
-          <Number />
+          <NumbersList />
         </ul>
-        <li>{ this.props.page }, { this.props.perPage } </li>
-        <button onClick={() => this.prevPage(1)}>Prev</button>
-        <button onClick={() => this.nextPage(1)}>Next</button>
-        <button onClick={() => this.props.requestNumbers({ page: this.props.page, perPage: this.props.perPage })}>Sub</button>
+        <button onClick={() => this.prevPage()}>Prev</button>
+        <button onClick={() => this.nextPage()}>Next</button>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  page: state.page,
-  perPage: state.perPage,
-  number: state.number
+  numbersList: state.numbersList
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({ ...Numbers, ...SelectPage }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators( ActionsNumbersList, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

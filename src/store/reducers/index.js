@@ -1,11 +1,7 @@
 import { combineReducers } from 'redux';
 
-import number from './number';
-import page from './page';
-import perPage from './perPage';
+import numbersList from './numbersList';
 
 export default combineReducers({
-    number,
-    page,
-    perPage
+    numbersList,
 });

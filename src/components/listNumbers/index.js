@@ -1,22 +1,21 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 
-const Number = ({page, number, nextPage}) => (
+const NumbersList = ({ numbersList }) => (
   <Fragment>
     {
-      number ?
-        number.map((item, i) => (
+      numbersList.data ?
+      numbersList.data.map((item, i) => (
           <li key={i}>{ item.number } = { item.cost }$</li>
         ))
       : null
     }
-    <li>{ page }</li>
+    <li>{ numbersList.meta.page }</li>
   </Fragment>
 );
 
 const mapStateToProps = state => ({
-  number: state.number,
-  page: state.page
+  numbersList: state.numbersList,
 });
 
-export default connect(mapStateToProps)(Number);
+export default connect(mapStateToProps)(NumbersList);
