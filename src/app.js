@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        <div>
-          <h1>Hello daddy!</h1>
-        </div>
-      </div>
-    );
-  }
-}
+import Router from './router';
+
+import './config/reactotron';
+import store from './store';
+
+const App = () => (
+  <BrowserRouter>
+    <Provider store={store}>
+      <Router />
+    </Provider>
+  </BrowserRouter>
+);
+
+export default App;

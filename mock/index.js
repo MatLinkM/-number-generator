@@ -5,8 +5,8 @@ module.exports = {
     for (let number = 555000000; number < 555001000; number++) {
       number = number.toString();
       data.push({
-        "number": number,
-        "cost": `1.${number.substr(7)}`
+        "number": Number(number),
+        "cost": Number(`1.${number.substr(7)}`)
       });
     }
 
@@ -29,7 +29,7 @@ module.exports = {
 
     if(value.page <= totalPages){
       for(let i = count; i < maxPage; i++){
-        if(listNumbers.length != 0){
+        if(listNumbers[i] != null){
           page.data.push(listNumbers[i]);
         }
         count++;
