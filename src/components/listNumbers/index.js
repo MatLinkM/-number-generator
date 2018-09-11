@@ -1,18 +1,33 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
+import { Container, Loading } from './styles';
+
 const NumbersList = ({ numbersList }) => (
-  <Fragment>
-    <li>{ numbersList.meta.page }</li>
+  <Container>
     {
-      numbersList.loading ? <span>Carregando...</span>
+      numbersList.loading ?
+      <Loading>
+        <span>Carregando...</span>
+      </Loading>
       :
-      numbersList.data.map((item, i) => (
-        <li key={i}>{ item.number } = { item.cost }$</li>
-      ))
+      <table>
+        <tr>
+          <th>Numbers</th>
+          <th>Cost</th>
+        </tr>
+        {
+          numbersList.data.map((item, i) => (
+            <tr key={i}>
+              <td>{ item.number }</td>
+              <td>{ item.cost }$</td>
+            </tr>
+          ))
+        }
+      </table>
     }
     { !!numbersList.error && <span>{numbersList.error}</span> }
-  </Fragment>
+  </Container>
 );
 
 const mapStateToProps = state => ({
