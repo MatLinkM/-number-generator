@@ -79,12 +79,14 @@ class Main extends Component {
           <button
             class="buttonNavigate"
             disabled={page == 1 ? true : false}
-            onClick={() => this.prevPage()}>Prev
+            onClick={() => this.prevPage()}>
+            Prev
           </button>
           <button
             class="buttonNavigate"
             disabled={page < totalPages ? false : true}
-            onClick={() => this.nextPage()}>Next
+            onClick={() => this.nextPage()}>
+            Next
           </button>
         </Row>
       </Container>
