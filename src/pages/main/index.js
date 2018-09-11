@@ -9,8 +9,9 @@ import {
   Container,
   Header,
   Title,
-  Submit,
-  Content
+  PerParge,
+  Content,
+  Row
 } from './styles';
 
 class Main extends Component {
@@ -42,40 +43,50 @@ class Main extends Component {
   }
 
   nextPage = async () => {
-    if (this.props.numbersList.meta.page < this.props.numbersList.meta.totalPages) {
-      await this.props.nextPage(1);
-      await this.props.requestNumbersList({
-        page: this.props.numbersList.meta.page,
-        perPage: this.props.numbersList.meta.perPage
-      });
-    }
+    await this.props.nextPage(1);
+    await this.props.requestNumbersList({
+      page: this.props.numbersList.meta.page,
+      perPage: this.props.numbersList.meta.perPage
+    });
   }
 
   prevPage = async () => {
-    if (this.props.numbersList.meta.page > 1) {
-      await this.props.prevPage(1);
-      await this.props.requestNumbersList({
-        page: this.props.numbersList.meta.page,
-        perPage: this.props.numbersList.meta.perPage
-      });
-    }
+    await this.props.prevPage(1);
+    await this.props.requestNumbersList({
+      page: this.props.numbersList.meta.page,
+      perPage: this.props.numbersList.meta.perPage
+    });
   }
 
   render() {
+    const { page, totalPages } = this.props.numbersList.meta;
     return (
       <Container>
         <Content>
           <Header>
             <Title>Available phone numbers</Title>
-            <Submit>
-              <input type="text" name="perPage" value={this.props.numbersList.meta.perPage} onChange={this.setPerPage} />
+            <PerParge>
+              <input type="number" name="perPage"
+                value={this.props.numbersList.meta.perPage}
+                onChange={this.setPerPage}
+              />
               <button onClick={() => this.newPerPage()}>Submit</button>
-            </Submit>
+            </PerParge>
           </Header>
           <NumbersList />
-          <button onClick={() => this.prevPage()}>Prev</button>
-          <button onClick={() => this.nextPage()}>Next</button>
         </Content>
+        <Row>
+          <button
+            class="buttonNavigate"
+            disabled={page == 1 ? true : false}
+            onClick={() => this.prevPage()}>Prev
+          </button>
+          <button
+            class="buttonNavigate"
+            disabled={page < totalPages ? false : true}
+            onClick={() => this.nextPage()}>Next
+          </button>
+        </Row>
       </Container>
     );
   }

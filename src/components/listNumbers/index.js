@@ -1,27 +1,32 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import { Container } from './styles';
+import { Container, Loading } from './styles';
 
 const NumbersList = ({ numbersList }) => (
   <Container>
-    <table>
-      <tr>
-        <th>Numbers</th>
-        <th>Cost</th>
-      </tr>
-      {
-        numbersList.loading ? <span>Carregando...</span>
-        :
-        numbersList.data.map((item, i) => (
-          <tr key={i}>
-            <td>{ item.number }</td>
-            <td>{ item.cost }$</td>
-          </tr>
-        ))
-      }
-      { !!numbersList.error && <span>{numbersList.error}</span> }
-    </table>
+    {
+      numbersList.loading ?
+      <Loading>
+        <span>Carregando...</span>
+      </Loading>
+      :
+      <table>
+        <tr>
+          <th>Numbers</th>
+          <th>Cost</th>
+        </tr>
+        {
+          numbersList.data.map((item, i) => (
+            <tr key={i}>
+              <td>{ item.number }</td>
+              <td>{ item.cost }$</td>
+            </tr>
+          ))
+        }
+      </table>
+    }
+    { !!numbersList.error && <span>{numbersList.error}</span> }
   </Container>
 );
 
